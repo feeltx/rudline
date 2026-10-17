@@ -1,0 +1,15 @@
+@theme {
+    --color-accent: oklch(70.45% 0.2135 311.16);
+    --color-strong: oklch(21% 0 0);
+    --color-body: oklch(26% 0 0);
+    --color-surface: oklch(98% 0.005 311.16);
+    --color-elevation: oklch(100% 0 0);
+}
+
+.dark {
+    --color-surface: oklch(21% 0 0);
+    --color-elevation: oklch(26% 0 0);
+    --color-weak: oklch(64% 0 0);
+    --color-body: oklch(86% 0 0);
+    --color-strong: oklch(98% 0 0);
+}

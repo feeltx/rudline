@@ -1,0 +1,45 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "cva";
+
+const button = cva({
+    base: "w-fit text-center select-none",
+    variants: {
+        intent: {
+            primary: "bg-accent dark:text-surface text-strong",
+            secondary: "bg-strong text-surface",
+        },
+        size: {
+            base: "py-3 px-5 text-base/5",
+            lg: "py-4 px-6 text-base/5",
+        },
+    },
+});
+
+type AnchorProps = HTMLAttributes<"a"> & { href: string } & VariantProps<
+        typeof button
+    >;
+type ButtonProps = HTMLAttributes<"button"> & { href?: never } & VariantProps<
+        typeof button
+    >;
+
+type Props = AnchorProps | ButtonProps;
+
+const {
+    class: className,
+    intent = "primary",
+    size = "base",
+    href,
+    ...rest
+} = Astro.props;
+---
+
+{href ? (
+    <a class={button({ intent, size, className })} href={href} {...rest}>
+        <slot />
+    </a>
+) : (
+    <button class={button({ intent, size, className })} {...rest}>
+        <slot />
+    </button>
+)}

@@ -1,16 +1,143 @@
 ---
+import Base from "@layouts/Base.astro";
+import Logo from "@components/Logo.astro";
+import Button from "@components/Button.astro";
+import { aboutList, services, teachingList } from "@utils/data";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import heroImg from "@assets/heroImg.png";
+import teachingImg from "@assets/teachingImg.png";
+import halftoneBg from "@assets/halftoneBg.png";
+import aboutPhoto from "@assets/aboutPhoto.jpg";
 ---
 
-<html lang="pl">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>Astro</title>
-    </head>
-    <body>
-        <h1>Rudline</h1>
-    </body>
-</html>
+<Base>
+    <section class="dark flex xl:grid xl:grid-cols-12 relative overflow-clip bg-surface">
+        <div class="z-10 aspect-3/4 xl:aspect-auto flex flex-col xl:col-span-8">
+            <div class="text-center xl:text-left xl:p-site text-strong grow flex flex-col justify-center xl:justify-start gap-4 xl:max-w-3xl">
+                <h1 class="heading text-dh1">
+                    Profesjonalne malowanie I oznakowanie nawierzchni
+                </h1>
+                <p class="text-lg/6 text-body">
+                    Zajmujemy się wykonywaniem oznakowania poziomego oraz
+                    malowaniem nawierzchni na parkingach, drogach, placach i
+                    terenach przemysłowych.
+                </p>
+            </div>
+            <div class="flex *:w-full divide-x divide-surface border-t border-b border-surface">
+                <Button size="lg" class="">
+                    Wyślij zapytanie
+                </Button>
+                <Button intent="secondary" size="lg" class="">
+                    O nas
+                </Button>
+            </div>
+        </div>
+        <Image
+            class="bg-surface absolute inset-0 aspect-3/4 xl:static xl:col-span-4"
+            src={heroImg}
+            alt=""
+        />
+    </section>
+    <section class="px-4 xl:px-12 mt-16 flex flex-col gap-6 xl:grid xl:grid-cols-12">
+        <div class="flex flex-col gap-4 xl:col-span-6">
+            <h2 class="heading text-3xl">O nas</h2>
+            <div class="*:text-pretty *:not-first:mt-2">
+                <p>
+                    Rudline to dynamicznie rozwijająca się firma, która od ponad
+                    5 lat z powodzeniem realizuje projekty na terenie całej
+                    Polski i Ukrainy. Specjalizujemy się w profesjonalnym
+                    oznakowaniu dróg, parkingów, terenów przemysłowych i
+                    przestrzeni użytkowych.
+                </p>
+                <p>
+                    Łączymy doświadczenie, nowoczesne technologie oraz wysoką
+                    jakość wykonania, aby tworzyć rozwiązania trwałe i
+                    dopasowane do potrzeb naszych klientów. Każdy projekt
+                    realizujemy z dbałością o szczegóły, terminowość i
+                    bezpieczeństwo. Stale się rozwijamy, poszerzamy zakres usług
+                    i podążamy za nowoczesnymi standardami branży. Naszym celem
+                    jest nie tylko wykonanie zlecenia, ale przede wszystkim
+                    stworzenie rozwiązania, które sprawdzi się przez lata.
+                </p>
+            </div>
+            <ul class="*:flex *:items-center flex flex-wrap *:grow-0 gap-x-6 gap-y-3">
+                {aboutList.map((item) => (
+                    <li class="flex gap-2 items-center">
+                        <Icon name="griddy-icons:check-circle-alt-01" />
+                        <span>{item}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+        <Image
+            class="bg-strong aspect-4/3 w-full xl:col-start-8 xl:col-span-5"
+            src={aboutPhoto}
+            alt=""
+        />
+    </section>
+    <section class="px-4 xl:px-12 mt-16 flex flex-col gap-6 dark bg-surface pt-8 pb-5">
+        <div class="flex flex-col gap-4">
+            <h2 class="heading text-3xl text-strong">Realizacje</h2>
+            <p class="text-body">
+                Quam sagittis sem lorem non rhoncus venenatis donec amet. A
+                quisque sodales dignissim aliquam duis in nullam nisi.
+            </p>
+        </div>
+        <div class="bg-strong aspect-4/3 w-full"></div>
+    </section>
+    <section class="px-4 xl:px-12 mt-16 flex flex-col gap-6">
+        <div class="flex flex-col gap-4">
+            <h2 class="heading text-3xl xl:text-4xl">Usługi</h2>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe
+                officiis error adipisci est expedita necessitatibus!
+            </p>
+        </div>
+        <div class="grid gap-3 grid-cols-[repeat(auto-fit,minmax(20rem,1fr))]">
+            {services.map((s) => (
+                <div class="flex flex-col justify-between gap-4 p-4 border border-accent/20 bg-accent/5 relative overflow-clip">
+                    <h3 class="text-xl/6 font-medium">{s.title}</h3>
+                    <p>{s.description}</p>
+                    <Image
+                        class="absolute inset-0 -z-10 opacity-10"
+                        src={halftoneBg}
+                        alt=""
+                    />
+                </div>
+            ))}
+        </div>
+    </section>
+    <section class="px-site mt-16 flex flex-col gap-6 xl:grid xl:grid-cols-12">
+        <div class="flex flex-col gap-8 xl:col-span-6">
+            <div class="flex flex-col gap-4">
+                <h2 class="heading text-3xl">Uczymy i wspieramy</h2>
+                <Image
+                    class="aspect-square xl:hidden"
+                    src={teachingImg}
+                    alt=""
+                />
+                <p>
+                    Lectus dapibus nunc elit tellus. Tempor pulvinar faucibus
+                    fusce diam nunc ultrices dolor. Quam sagittis sem lorem non
+                    rhoncus venenatis donec amet. A quisque sodales dignissim
+                    aliquam duis in nullam nisi.
+                </p>
+                <ul class="flex flex-col gap-y-3">
+                    {teachingList.map((item) => (
+                        <li class="flex gap-2 items-center">
+                            <Icon name="griddy-icons:check-circle-alt-01" />
+                            <span>{item}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <Button href="/">Dowiedz się więcej</Button>
+        </div>
+        <Image
+            class="aspect-square hidden xl:block xl:col-start-8 xl:col-span-5"
+            src={teachingImg}
+            alt=""
+        />
+    </section>
+</Base>

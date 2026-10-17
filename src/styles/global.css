@@ -1,1 +1,20 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@import "./colors.css";
+
+@theme inline {
+    --font-sans: var(--font-commissioner);
+    --spacing-site: clamp(1rem, 0.0909rem + 3.6364vw, 3rem);
+    --text-dh1: clamp(1.875rem, 1.393rem + 2.009vw, 3rem);
+    --text-dh1--line-height: 1.1;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+.heading {
+    @apply uppercase font-extrabold;
+}
+
+image {
+    object-fit: cover;
+}
