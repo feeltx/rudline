@@ -12,13 +12,13 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
 ---
 
 <Base>
-    <section class="dark flex xl:grid xl:grid-cols-12 relative overflow-clip bg-surface">
+    <section id="hero" class="dark flex xl:grid xl:grid-cols-12 relative overflow-clip bg-surface">
         <div class="z-10 aspect-3/4 xl:aspect-auto flex flex-col xl:col-span-8">
-            <div class="text-center xl:text-left xl:p-site text-strong grow flex flex-col justify-center xl:justify-start gap-4 xl:max-w-3xl">
+            <div class="text-center xl:text-left text-strong grow flex flex-col justify-center xl:justify-start gap-4 xl:max-w-3xl p-site">
                 <h1 class="heading text-dh1">
                     Profesjonalne malowanie I oznakowanie nawierzchni
                 </h1>
-                <p class="text-lg/6 text-body">
+                <p class="text-lg/6 text-body text-pretty">
                     Zajmujemy się wykonywaniem oznakowania poziomego oraz
                     malowaniem nawierzchni na parkingach, drogach, placach i
                     terenach przemysłowych.
@@ -39,7 +39,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
             alt=""
         />
     </section>
-    <section class="px-4 xl:px-12 mt-16 flex flex-col gap-6 xl:grid xl:grid-cols-12">
+    <section id="about" class="px-4 xl:px-12 mt-16 flex flex-col gap-6 xl:grid xl:grid-cols-12">
         <div class="flex flex-col gap-4 xl:col-span-6">
             <h2 class="heading text-3xl">O nas</h2>
             <div class="*:text-pretty *:not-first:mt-2">
@@ -71,12 +71,12 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
             </ul>
         </div>
         <Image
-            class="bg-strong aspect-4/3 w-full xl:col-start-8 xl:col-span-5"
+            class="aspect-4/3 w-full xl:col-start-8 xl:col-span-5 border border-accent/25"
             src={aboutPhoto}
             alt=""
         />
     </section>
-    <section class="px-4 xl:px-12 mt-16 flex flex-col gap-6 dark bg-surface pt-8 pb-5">
+    <section id="projects" class="px-4 xl:px-12 mt-16 flex flex-col gap-6 dark bg-surface pt-8 pb-5">
         <div class="flex flex-col gap-4">
             <h2 class="heading text-3xl text-strong">Realizacje</h2>
             <p class="text-body">
@@ -86,7 +86,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
         </div>
         <div class="bg-strong aspect-4/3 w-full"></div>
     </section>
-    <section class="px-4 xl:px-12 mt-16 flex flex-col gap-6">
+    <section id="services" class="px-4 xl:px-12 mt-16 flex flex-col gap-6">
         <div class="flex flex-col gap-4">
             <h2 class="heading text-3xl xl:text-4xl">Usługi</h2>
             <p>
@@ -94,7 +94,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
                 officiis error adipisci est expedita necessitatibus!
             </p>
         </div>
-        <div class="grid gap-3 grid-cols-[repeat(auto-fit,minmax(20rem,1fr))]">
+        <div class="grid gap-3 grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]">
             {services.map((s) => (
                 <div class="flex flex-col justify-between gap-4 p-4 border border-accent/20 bg-accent/5 relative overflow-clip">
                     <h3 class="text-xl/6 font-medium">{s.title}</h3>
@@ -108,10 +108,10 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
             ))}
         </div>
     </section>
-    <section class="px-site mt-16 flex flex-col gap-6 xl:grid xl:grid-cols-12">
+    <section id="teaching" class="px-site mt-16 flex flex-col gap-6 xl:grid xl:grid-cols-12">
         <div class="flex flex-col gap-8 xl:col-span-6">
             <div class="flex flex-col gap-4">
-                <h2 class="heading text-3xl">Uczymy i wspieramy</h2>
+                <h2 class="heading text-3xl xl:text-4xl">Uczymy i wspieramy</h2>
                 <Image
                     class="aspect-square xl:hidden"
                     src={teachingImg}

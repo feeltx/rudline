@@ -1,19 +1,20 @@
-export const PHONE = "+48 693 745 341";
-
-export const contactData = {
-  phone: {
-    value: "+48 693 745 341",
-    icon: "griddy-icons:phone",
+export const contactData = [
+  {
+    name: "Yaroslav Rudenko",
+    contacts: {
+      phone: { value: "+48 516 087 048", icon: "griddy-icons:phone" },
+      email: { value: "4rudik@gmail.com", icon: "griddy-icons:email" },
+      nip: { value: "NIP 6423252456", icon: "griddy-icons:location-pin" },
+    },
   },
-  email: {
-    value: "4rudik@gmail.com",
-    icon: "griddy-icons:email",
+  {
+    name: "Jakub Wróbel",
+    contacts: {
+      phone: { value: "+48 660 672 795", icon: "griddy-icons:phone" },
+      nip: { value: "NIP 6351740990", icon: "griddy-icons:location-pin" },
+    },
   },
-  location: {
-    value: "ul. Prosta 1, Rybnik",
-    icon: "griddy-icons:location-pin",
-  },
-};
+];
 
 export const services = [
   {

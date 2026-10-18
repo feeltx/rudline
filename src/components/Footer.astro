@@ -2,90 +2,105 @@
 import { Icon } from "astro-icon/components";
 import { contactData } from "@utils/data";
 import Button from "./Button.astro";
+import { Image } from "astro:assets";
+import halftoneBg from "@assets/halftoneBg.png";
 ---
 
-<footer class="dark px-4 xl:px-12 pt-8 xl:pt-10 bg-surface mt-16 scheme-dark grid gap-4 xl:grid-cols-2">
-    <h2 class="text-strong uppercase font-extrabold text-3xl xl:text-5xl xl:col-start-1 xl:col-end-1">
-        Odezwij się!
-    </h2>
-    <div class="flex flex-col gap-2 xl:col-start-1 xl:col-end-1">
-        <p class="text-body">
-            Cum corrupti aut facere tempore. Ipsa eaque deserunt quos ratione
-            provident eius?
-        </p>
-        <ul class="flex flex-col">
-            {Object.entries(contactData).map(([key, data]) => (
-                <li class="contents">
-                    <button class="flex items-center gap-2 py-2 text-strong">
-                        <Icon name={data.icon} size={20} />
-                        <span>{data.value}</span>
-                    </button>
-                </li>
+<footer class="dark px-4 xl:px-12 pt-8 xl:pt-10 bg-surface mt-16 scheme-dark grid gap-4 xl:grid-cols-2 relative overflow-clip">
+  <h2 class="text-strong uppercase font-extrabold text-3xl xl:text-5xl xl:col-start-1 xl:col-end-1">
+    Odezwij się!
+  </h2>
+  <div class="flex flex-col gap-6 xl:col-start-1 xl:col-end-1">
+    <p class="text-body">
+      Cum corrupti aut facere tempore. Ipsa eaque deserunt quos ratione
+      provident eius?
+    </p>
+    <div class="grid md:grid-cols-2 gap-y-6">
+      {contactData.map(({ name, contacts }) => (
+        <div class="flex flex-col gap-1">
+          <span class="text-body uppercase text-xs font-medium">{name}</span>
+          <ul class="flex flex-col">
+            {Object.values(contacts).map(({ value, icon }) => (
+              <li class="flex items-center gap-2 py-2.5 text-strong">
+                <Icon name={icon} size={20} />
+                <span>{value}</span>
+              </li>
             ))}
-        </ul>
+          </ul>
+        </div>
+      ))}
     </div>
-    <form
-        class="grid gap-3 mt-6 xl:mt-0 xl:grid-cols-2"
-        action="https://api.web3forms.com/submit"
-        method="POST"
-    >
-        <input
-            type="hidden"
-            name="access_key"
-            value="efea76c0-e8b9-484a-9f2d-8a66af9dc13c"
-        />
-        <input
-            autocomplete="on"
-            type="text"
-            id="name-input"
-            name="name"
-            placeholder="Mateusz Witczak"
-        />
-        <input
-            autocomplete="on"
-            type="email"
-            id="email-input"
-            name="email"
-            placeholder="mateuszwitczak@gmail.com"
-        />
-        <input
-            autocomplete="off"
-            type="text"
-            id="topic-input"
-            name="topic"
-            placeholder="Temat wiadomości"
-            class="xl:col-span-2"
-        />
-        <textarea
-            name="content"
-            id="content-input"
-            maxlength="1000"
-            minlength="1"
-            rows="6"
-            autocomplete="off"
-            placeholder="Treść"
-            class="xl:col-span-2"
-        ></textarea>
-        <Button class="justify-self-end xl:col-span-2">Wyślij</Button>
-    </form>
-    <span>Copyright</span>
+  </div>
+  <form
+    class="grid gap-3 mt-6 xl:mt-0 xl:grid-cols-2"
+    action="https://api.web3forms.com/submit"
+    method="POST"
+  >
+    <input
+      type="hidden"
+      name="access_key"
+      value="efea76c0-e8b9-484a-9f2d-8a66af9dc13c"
+    />
+    <input
+      autocomplete="on"
+      type="text"
+      id="name-input"
+      name="name"
+      placeholder="Twoje imię / nazwa firmy"
+    />
+    <input
+      autocomplete="on"
+      type="email"
+      id="email-input"
+      name="email"
+      placeholder="Twój adres email"
+    />
+    <input
+      autocomplete="off"
+      type="text"
+      id="topic-input"
+      name="topic"
+      placeholder="Temat wiadomości"
+      class="xl:col-span-2"
+    />
+    <textarea
+      name="content"
+      id="content-input"
+      maxlength="1000"
+      minlength="1"
+      rows="6"
+      autocomplete="off"
+      placeholder="Treść"
+      class="xl:col-span-2"
+    ></textarea>
+    <Button class="justify-self-end xl:col-span-2">Wyślij</Button>
+  </form>
+  <span>Copyright</span>
+  <Image
+    src={halftoneBg}
+    alt=""
+    class="absolute bottom-0 inset-x-0 opacity-10 rotate-180"
+  />
 </footer>
 
 <style>
-    input,
-    textarea {
-        background-color: var(--color-elevation);
-        border: none;
-        border-bottom: 1px solid oklch(100% 0 0 / 0.1);
-        color: var(--color-strong);
+  input,
+  textarea {
+    background-color: var(--color-elevation);
+    border: none;
+    border-bottom: 1px solid oklch(100% 0 0 / 0.1);
+    color: var(--color-strong);
 
-        &::placeholder {
-            color: var(--color-weak);
-        }
-
-        &:focus {
-            --tw-ring-color: var(--color-accent);
-            border-bottom: none;
-        }
+    &::placeholder {
+      color: var(--color-weak);
     }
+
+    &:focus {
+      --tw-ring-color: var(--color-accent);
+      border-bottom: none;
+    }
+  }
+  *:not(img) {
+    z-index: 2;
+  }
 </style>

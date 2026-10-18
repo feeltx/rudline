@@ -3,7 +3,7 @@ import Logo from "@components/Logo.astro";
 import { contactData } from "@utils/data";
 ---
 
-<header class="flex justify-between px-site py-4 bg-surface items-center sticky top-0 z-50">
-    <Logo classes="h-4.5" />
-    <span class="text-base">{contactData.phone.value}</span>
+<header class="flex justify-between px-site py-1 bg-surface items-center sticky top-0 z-50">
+  <Logo classes="h-4.5" />
+  <span class="text-base py-2.5">{contactData[0].contacts.phone.value}</span>
 </header>
