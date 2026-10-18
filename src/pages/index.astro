@@ -13,7 +13,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
 
 <Base>
     <section id="hero" class="dark flex xl:grid xl:grid-cols-12 relative overflow-clip bg-surface">
-        <div class="z-10 aspect-3/4 xl:aspect-auto flex flex-col xl:col-span-8">
+        <div class="z-10 aspect-3/4 md:h-svh xl:h-auto md:aspect-auto flex flex-col xl:col-span-8">
             <div class="text-center xl:text-left text-strong grow flex flex-col justify-center xl:justify-start gap-4 xl:max-w-3xl p-site">
                 <h1 class="heading text-dh1">
                     Profesjonalne malowanie I oznakowanie nawierzchni
@@ -25,16 +25,16 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
                 </p>
             </div>
             <div class="flex *:w-full divide-x divide-surface border-t border-b border-surface">
-                <Button size="lg" class="">
+                <Button size="lg" href={"#about"}>
                     Wyślij zapytanie
                 </Button>
-                <Button intent="secondary" size="lg" class="">
+                <Button intent="secondary" size="lg" href={"#about"}>
                     O nas
                 </Button>
             </div>
         </div>
         <Image
-            class="bg-surface absolute inset-0 aspect-3/4 xl:static xl:col-span-4"
+            class="bg-surface absolute inset-x-0 bottom-0 aspect-3/4 xl:static xl:col-span-4"
             src={heroImg}
             alt=""
         />
@@ -42,7 +42,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
             class="bg-radial from-surface/25 to-surface/0 absolute inset-x-0 top-1/2 -translate-y-1/2 aspect-square xl:hidden"
         />
     </section>
-    <section id="about" class="px-4 xl:px-12 mt-16 flex flex-col gap-6 xl:grid xl:grid-cols-12">
+    <section id="about" class="px-4 xl:px-12 flex flex-col gap-6 xl:grid xl:grid-cols-12">
         <div class="flex flex-col gap-4 xl:col-span-6">
             <h2 class="heading text-3xl">O nas</h2>
             <div class="*:text-pretty *:not-first:mt-2">
@@ -64,7 +64,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
                     stworzenie rozwiązania, które sprawdzi się przez lata.
                 </p>
             </div>
-            <ul class="*:flex *:items-center flex flex-wrap *:grow-0 gap-x-6 gap-y-3">
+            <ul class="*:flex *:items-center flex flex-wrap *:grow-0 gap-x-4 gap-y-3">
                 {aboutList.map((item) => (
                     <li class="flex gap-2 items-center">
                         <Icon name="griddy-icons:check-circle-alt-01" />
@@ -79,7 +79,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
             alt=""
         />
     </section>
-    <section id="projects" class="px-4 xl:px-12 mt-16 flex flex-col gap-6 dark bg-surface pt-8 pb-5">
+    <section id="projects" class="px-4 xl:px-12 flex flex-col gap-6 dark bg-surface pt-8 pb-5 mt-4">
         <div class="flex flex-col gap-4">
             <h2 class="heading text-3xl text-strong">Realizacje</h2>
             <p class="text-body">
@@ -89,7 +89,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
         </div>
         <div class="bg-strong aspect-4/3 w-full"></div>
     </section>
-    <section id="services" class="px-4 xl:px-12 mt-16 flex flex-col gap-6">
+    <section id="services" class="px-4 xl:px-12 flex flex-col gap-6">
         <div class="flex flex-col gap-4">
             <h2 class="heading text-3xl xl:text-4xl">Usługi</h2>
             <p>
@@ -97,7 +97,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
                 officiis error adipisci est expedita necessitatibus!
             </p>
         </div>
-        <div class="grid gap-3 grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]">
+        <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
             {services.map((s) => (
                 <div class="flex flex-col justify-between gap-4 p-4 border border-accent/20 bg-accent/5 relative overflow-clip">
                     <h3 class="text-xl/6 font-medium">{s.title}</h3>
@@ -111,7 +111,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
             ))}
         </div>
     </section>
-    <section id="teaching" class="px-site mt-16 flex flex-col gap-6 xl:grid xl:grid-cols-12">
+    <section id="teaching" class="px-site flex flex-col gap-6 xl:grid xl:grid-cols-12">
         <div class="flex flex-col gap-8 xl:col-span-6">
             <div class="flex flex-col gap-4">
                 <h2 class="heading text-3xl xl:text-4xl">Uczymy i wspieramy</h2>

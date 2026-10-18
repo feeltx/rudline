@@ -6,7 +6,7 @@ import { Image } from "astro:assets";
 import halftoneBg from "@assets/halftoneBg.png";
 ---
 
-<footer class="dark px-4 xl:px-12 pt-8 xl:pt-10 bg-surface mt-16 scheme-dark grid gap-4 xl:grid-cols-2 relative overflow-clip">
+<footer class="dark px-4 xl:px-12 pt-8 xl:pt-10 bg-surface mt-20 md:mt-24 scheme-dark grid gap-4 xl:grid-cols-2 relative overflow-clip">
   <h2 class="text-strong uppercase font-extrabold text-3xl xl:text-5xl xl:col-start-1 xl:col-end-1">
     Odezwij się!
   </h2>
@@ -32,7 +32,7 @@ import halftoneBg from "@assets/halftoneBg.png";
     </div>
   </div>
   <form
-    class="grid gap-3 mt-6 xl:mt-0 xl:grid-cols-2"
+    class="grid gap-3 mt-6 xl:mt-0 md:grid-cols-2"
     action="https://api.web3forms.com/submit"
     method="POST"
   >
@@ -46,34 +46,40 @@ import halftoneBg from "@assets/halftoneBg.png";
       type="text"
       id="name-input"
       name="name"
+      required
       placeholder="Twoje imię / nazwa firmy"
+      class="opacity-90 backdrop-blur-xs"
     />
     <input
       autocomplete="on"
       type="email"
       id="email-input"
       name="email"
+      required
       placeholder="Twój adres email"
+      class="opacity-90 backdrop-blur-xs"
     />
     <input
       autocomplete="off"
       type="text"
       id="topic-input"
       name="topic"
+      required
       placeholder="Temat wiadomości"
-      class="xl:col-span-2"
+      class="md:col-span-2 opacity-90 backdrop-blur-xs"
     />
     <textarea
       name="content"
+      required
       id="content-input"
       maxlength="1000"
       minlength="1"
       rows="6"
       autocomplete="off"
       placeholder="Treść"
-      class="xl:col-span-2"
+      class="md:col-span-2 opacity-90 backdrop-blur-xs"
     ></textarea>
-    <Button class="justify-self-end xl:col-span-2">Wyślij</Button>
+    <Button class="justify-self-end md:col-span-2 cursor-pointer">Wyślij</Button>
   </form>
   <span>Copyright</span>
   <Image

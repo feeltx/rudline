@@ -3,18 +3,30 @@
 @import "./colors.css";
 
 @theme inline {
-    --font-sans: var(--font-commissioner);
-    --spacing-site: clamp(1rem, 0.0909rem + 3.6364vw, 3rem);
-    --text-dh1: clamp(1.875rem, 1.5rem + 1.875vw, 3rem);
-    --text-dh1--line-height: 1.1;
+  --font-sans: var(--font-commissioner);
+}
+
+@theme {
+  --spacing-site: clamp(1rem, 0.0909rem + 3.6364vw, 3rem);
+  --text-dh1: clamp(1.875rem, 0.75rem + 5.625vw, 3rem);
+  --text-dh1--line-height: 1.1;
+
+  --breakpoint-sm: 16rem;
+  --breakpoint-md: 40rem;
+  --breakpoint-lg: 60rem;
+  --breakpoint-xl: 80rem;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 .heading {
-    @apply uppercase font-extrabold;
+  @apply uppercase font-extrabold;
 }
 
 image {
-    object-fit: cover;
+  object-fit: cover;
+}
+
+section {
+  @apply scroll-my-20;
 }
