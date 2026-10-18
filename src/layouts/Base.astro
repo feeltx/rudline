@@ -3,19 +3,45 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import "@styles/global.css";
 import { Font } from "astro:assets";
+import { SEO } from "astro-seo";
+
+const METADATA = {
+    title: "Rudline",
+    desc: "Zajmujemy się wykonywaniem oznakowania poziomego oraz malowaniem nawierzchni na parkingach, drogach, placach i terenach przemysłowych.",
+    ogImage: "https://rudline.pl/og.png",
+};
 ---
 
 <html lang="pl">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
-        <title>Rudline</title>
         <Font cssVariable="--font-commissioner" />
+        <SEO
+            title={METADATA.title}
+            description={METADATA.desc}
+            openGraph={{
+                basic: {
+                    title: METADATA.title,
+                    type: "website",
+                    image: METADATA.ogImage,
+                },
+            }}
+            extend={{
+                link: [{ rel: "icon", href: "/favicon.svg" }],
+                meta: [
+                    {
+                        name: "twitter:image",
+                        content: METADATA.ogImage,
+                    },
+                    { name: "twitter:title", content: METADATA.title },
+                    { name: "twitter:description", content: METADATA.desc },
+                ],
+            }}
+        />
     </head>
-    <body class="bg-surface text-strong scroll-smooth">
+    <body class="bg-surface text-strong antialiased">
         <Header />
         <main class="flex flex-col gap-16 md:gap-20">
             <slot />

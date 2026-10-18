@@ -80,9 +80,9 @@ export const services = [
 ];
 
 export const teachingList = [
-  "Non venenatis tincidunt",
-  "Non venenatis tincidunt",
-  "Non venenatis tincidunt",
+  "Doradztwo w doborze oznakowania do charakteru obiektu",
+  "Wsparcie w wyborze materiałów i technologii",
+  "Wskazówki dotyczące konserwacji i odnawiania oznakowania",
 ];
 
 export const aboutList = [

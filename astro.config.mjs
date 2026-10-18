@@ -5,6 +5,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 import icon from "astro-icon";
 
+import sanity from "@sanity/astro";
+import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
   vite: {
@@ -33,5 +36,15 @@ export default defineConfig({
   //   port: 4321,
   // },
 
-  integrations: [icon()],
+  integrations: [
+    icon(),
+    sanity({
+      projectId: "uj4br4j4",
+      dataset: "production",
+      apiVersion: "2026-03-01",
+      useCdn: false,
+    }),
+    ,
+    react(),
+  ],
 });

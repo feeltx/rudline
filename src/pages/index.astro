@@ -1,6 +1,5 @@
 ---
 import Base from "@layouts/Base.astro";
-import Logo from "@components/Logo.astro";
 import Button from "@components/Button.astro";
 import { aboutList, services, teachingList } from "@utils/data";
 import { Icon } from "astro-icon/components";
@@ -9,12 +8,21 @@ import heroImg from "@assets/heroImg.png";
 import teachingImg from "@assets/teachingImg.png";
 import halftoneBg from "@assets/halftoneBg.png";
 import aboutPhoto from "@assets/aboutPhoto.jpg";
+import { sanityClient } from "sanity:client";
+import SanityImage from "@components/SanityImage.astro";
+const projects = await sanityClient.fetch(
+    `*[_type == "project"] | order(date desc)`,
+);
+import { isNew } from "@utils/index";
 ---
 
 <Base>
-    <section id="hero" class="dark flex xl:grid xl:grid-cols-12 relative overflow-clip bg-surface">
-        <div class="z-10 aspect-3/4 md:h-svh xl:h-auto md:aspect-auto flex flex-col xl:col-span-8">
-            <div class="text-center xl:text-left text-strong grow flex flex-col justify-center xl:justify-start gap-4 xl:max-w-3xl p-site">
+    <section
+        id="hero"
+        class="dark flex relative overflow-clip bg-surface lg:h-svh"
+    >
+        <div class="z-10 aspect-3/4 lg:aspect-auto flex flex-col lg:flex-1">
+            <div class="text-center lg:text-left text-strong grow flex flex-col justify-center lg:justify-start gap-4 lg:max-w-3xl px-site py-24">
                 <h1 class="heading text-dh1">
                     Profesjonalne malowanie I oznakowanie nawierzchni
                 </h1>
@@ -25,7 +33,7 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
                 </p>
             </div>
             <div class="flex *:w-full divide-x divide-surface border-t border-b border-surface">
-                <Button size="lg" href={"#about"}>
+                <Button size="lg" href={"#footer"}>
                     Wyślij zapytanie
                 </Button>
                 <Button intent="secondary" size="lg" href={"#about"}>
@@ -34,16 +42,18 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
             </div>
         </div>
         <Image
-            class="bg-surface absolute inset-x-0 bottom-0 aspect-3/4 xl:static xl:col-span-4"
+            class="bg-surface absolute inset-x-0 bottom-0 aspect-3/4 lg:static lg:h-full lg:w-auto lg:max-w-none lg:shrink-0 object-cover"
             src={heroImg}
             alt=""
+            loading="eager"
         />
-        <div
-            class="bg-radial from-surface/25 to-surface/0 absolute inset-x-0 top-1/2 -translate-y-1/2 aspect-square xl:hidden"
-        />
+        <div class="bg-radial from-surface/25 to-surface/0 absolute inset-x-0 top-1/2 -translate-y-1/2 aspect-square lg:hidden pointer-events-none" />
     </section>
-    <section id="about" class="px-4 xl:px-12 flex flex-col gap-6 xl:grid xl:grid-cols-12">
-        <div class="flex flex-col gap-4 xl:col-span-6">
+    <section
+        id="about"
+        class="px-site flex flex-col gap-6 lg:grid lg:grid-cols-12"
+    >
+        <div class="flex flex-col gap-4 lg:col-span-6">
             <h2 class="heading text-3xl">O nas</h2>
             <div class="*:text-pretty *:not-first:mt-2">
                 <p>
@@ -74,32 +84,53 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
             </ul>
         </div>
         <Image
-            class="aspect-4/3 w-full xl:col-start-8 xl:col-span-5 border border-accent/25"
+            class="aspect-4/3 w-full lg:col-start-8 lg:col-span-5 border border-accent/25"
             src={aboutPhoto}
             alt=""
         />
     </section>
-    <section id="projects" class="px-4 xl:px-12 flex flex-col gap-6 dark bg-surface pt-8 pb-5 mt-4">
+    <section
+        id="projects"
+        class="px-4 xl:px-12 flex flex-col gap-6 dark bg-surface pt-8 pb-5 mt-4 scheme-dark"
+    >
         <div class="flex flex-col gap-4">
             <h2 class="heading text-3xl text-strong">Realizacje</h2>
             <p class="text-body">
-                Quam sagittis sem lorem non rhoncus venenatis donec amet. A
-                quisque sodales dignissim aliquam duis in nullam nisi.
+                Wybrane realizacje z ostatnich lat: przejścia dla pieszych,
+                miejsca postojowe i oznakowanie dróg.
             </p>
         </div>
-        <div class="bg-strong aspect-4/3 w-full"></div>
+        <div class="flex overflow-x-scroll w-full gap-4">
+            {projects.map((project: any) => (
+                <div class="group relative w-full shrink-0 lg:w-1/2">
+                    <SanityImage node={project.image} />
+                    {isNew(project.date) && (
+                        <span class="bg-accent text-surface absolute top-2 left-2 z-10 uppercase px-2.5 py-1 text-xs font-medium rounded-full select-none group-hover:opacity-0 group-hover:scale-95 transition-all origin-tc">
+                            nowość
+                        </span>
+                    )}
+                </div>
+            ))}
+        </div>
     </section>
     <section id="services" class="px-4 xl:px-12 flex flex-col gap-6">
         <div class="flex flex-col gap-4">
             <h2 class="heading text-3xl xl:text-4xl">Usługi</h2>
             <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe
-                officiis error adipisci est expedita necessitatibus!
+                Od parkingów po drogi publiczne: oznakowanie poziome i pionowe
+                dla firm, instytucji i zarządców terenów.
             </p>
         </div>
-        <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((s) => (
-                <div class="flex flex-col justify-between gap-4 p-4 border border-accent/20 bg-accent/5 relative overflow-clip">
+        <div
+            id="services-grid"
+            class="grid gap-3 md:grid-cols-2 lg:grid-cols-3"
+        >
+            {services.map((s, i) => (
+                <div
+                    data-extra={i >= 6 ? "" : undefined}
+                    hidden={i >= 6}
+                    class="flex flex-col justify-between gap-4 p-4 border border-accent/20 bg-accent/5 relative overflow-clip"
+                >
                     <h3 class="text-xl/6 font-medium">{s.title}</h3>
                     <p>{s.description}</p>
                     <Image
@@ -109,22 +140,35 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
                     />
                 </div>
             ))}
+            <Button
+                id="services-toggle"
+                intent="secondary"
+                type="button"
+                aria-expanded="false"
+                aria-controls="services-grid"
+                class="justify-self-end col-span-full cursor-pointer"
+            >
+                Pokaż wszystkie
+            </Button>
         </div>
     </section>
-    <section id="teaching" class="px-site flex flex-col gap-6 xl:grid xl:grid-cols-12">
-        <div class="flex flex-col gap-8 xl:col-span-6">
+    <section
+        id="teaching"
+        class="px-site flex flex-col gap-6 lg:grid lg:grid-cols-12"
+    >
+        <div class="flex flex-col gap-8 lg:col-span-6">
             <div class="flex flex-col gap-4">
                 <h2 class="heading text-3xl xl:text-4xl">Uczymy i wspieramy</h2>
                 <Image
-                    class="aspect-square xl:hidden"
+                    class="aspect-square lg:hidden"
                     src={teachingImg}
                     alt=""
                 />
                 <p>
-                    Lectus dapibus nunc elit tellus. Tempor pulvinar faucibus
-                    fusce diam nunc ultrices dolor. Quam sagittis sem lorem non
-                    rhoncus venenatis donec amet. A quisque sodales dignissim
-                    aliquam duis in nullam nisi.
+                    Dobre oznakowanie działa tylko wtedy, gdy kierowcy i piesi
+                    rozumieją, jak z niego korzystać. Pomagamy zarządcom
+                    parkingów i obiektów dobrać rozwiązania czytelne, trwałe i
+                    zgodne z obowiązującymi przepisami.
                 </p>
                 <ul class="flex flex-col gap-y-3">
                     {teachingList.map((item) => (
@@ -135,12 +179,24 @@ import aboutPhoto from "@assets/aboutPhoto.jpg";
                     ))}
                 </ul>
             </div>
-            <Button href="/">Dowiedz się więcej</Button>
+            <Button href="#footer">Zapytaj o doradztwo</Button>
         </div>
         <Image
-            class="aspect-square hidden xl:block xl:col-start-8 xl:col-span-5"
+            class="aspect-square hidden lg:block lg:col-start-8 lg:col-span-5"
             src={teachingImg}
             alt=""
         />
     </section>
 </Base>
+
+<script>
+    const btn = document.getElementById("services-toggle");
+    const extras = document.querySelectorAll("[data-extra]");
+
+    btn?.addEventListener("click", () => {
+        const open = btn.getAttribute("aria-expanded") === "true";
+        extras.forEach((el) => el.toggleAttribute("hidden", open));
+        btn.setAttribute("aria-expanded", String(!open));
+        btn.textContent = open ? "Pokaż wszystkie" : "Ukryj";
+    });
+</script>

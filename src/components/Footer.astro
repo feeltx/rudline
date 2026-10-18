@@ -6,107 +6,114 @@ import { Image } from "astro:assets";
 import halftoneBg from "@assets/halftoneBg.png";
 ---
 
-<footer class="dark px-4 xl:px-12 pt-8 xl:pt-10 bg-surface mt-20 md:mt-24 scheme-dark grid gap-4 xl:grid-cols-2 relative overflow-clip">
-  <h2 class="text-strong uppercase font-extrabold text-3xl xl:text-5xl xl:col-start-1 xl:col-end-1">
-    Odezwij się!
-  </h2>
-  <div class="flex flex-col gap-6 xl:col-start-1 xl:col-end-1">
-    <p class="text-body">
-      Cum corrupti aut facere tempore. Ipsa eaque deserunt quos ratione
-      provident eius?
-    </p>
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(12.5rem,1fr))] gap-y-6 gap-x-3">
-      {contactData.map(({ name, contacts }) => (
-        <div class="flex flex-col gap-1">
-          <span class="text-body uppercase text-xs font-medium">{name}</span>
-          <ul class="flex flex-col">
-            {Object.values(contacts).map(({ value, icon }) => (
-              <li class="flex items-center gap-2 py-2.5 text-strong">
-                <Icon name={icon} size={20} />
-                <span>{value}</span>
-              </li>
+<footer
+    id="footer"
+    class="dark px-4 xl:px-12 pt-8 xl:pt-10 bg-surface mt-20 md:mt-24 scheme-dark grid gap-4 xl:grid-cols-2 relative overflow-clip"
+>
+    <h2 class="text-strong uppercase font-extrabold text-3xl xl:text-5xl xl:col-start-1 xl:col-end-1">
+        Odezwij się!
+    </h2>
+    <div class="flex flex-col gap-6 xl:col-start-1 xl:col-end-1">
+        <p class="text-body">
+            Opisz krótko, co trzeba oznakować, a wrócimy z wyceną. Możesz też
+            zadzwonić bezpośrednio.
+        </p>
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(12.5rem,1fr))] gap-y-6 gap-x-3">
+            {contactData.map(({ name, contacts }) => (
+                <div class="flex flex-col gap-1">
+                    <span class="text-body uppercase text-xs font-medium">
+                        {name}
+                    </span>
+                    <ul class="flex flex-col">
+                        {Object.values(contacts).map(({ value, icon }) => (
+                            <li class="flex items-center gap-2 py-2.5 text-strong">
+                                <Icon name={icon} size={20} />
+                                <span>{value}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             ))}
-          </ul>
         </div>
-      ))}
     </div>
-  </div>
-  <form
-    class="grid gap-3 mt-6 xl:mt-0 md:grid-cols-2"
-    action="https://api.web3forms.com/submit"
-    method="POST"
-  >
-    <input
-      type="hidden"
-      name="access_key"
-      value="efea76c0-e8b9-484a-9f2d-8a66af9dc13c"
+    <form
+        class="grid gap-3 mt-6 xl:mt-0 md:grid-cols-2"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+    >
+        <input
+            type="hidden"
+            name="access_key"
+            value="efea76c0-e8b9-484a-9f2d-8a66af9dc13c"
+        />
+        <input
+            autocomplete="on"
+            type="text"
+            id="name-input"
+            name="name"
+            required
+            placeholder="Twoje imię / nazwa firmy"
+            class="opacity-90 backdrop-blur-xs"
+        />
+        <input
+            autocomplete="on"
+            type="email"
+            id="email-input"
+            name="email"
+            required
+            placeholder="Twój adres email"
+            class="opacity-90 backdrop-blur-xs"
+        />
+        <input
+            autocomplete="off"
+            type="text"
+            id="topic-input"
+            name="topic"
+            required
+            placeholder="Temat wiadomości"
+            class="md:col-span-2 opacity-90 backdrop-blur-xs"
+        />
+        <textarea
+            name="content"
+            required
+            id="content-input"
+            maxlength="1000"
+            minlength="1"
+            rows="6"
+            autocomplete="off"
+            placeholder="Treść"
+            class="md:col-span-2 opacity-90 backdrop-blur-xs"
+        ></textarea>
+        <Button class="justify-self-end md:col-span-2 cursor-pointer">
+            Wyślij
+        </Button>
+    </form>
+    <span>Copyright</span>
+    <Image
+        src={halftoneBg}
+        alt=""
+        class="absolute bottom-0 inset-x-0 opacity-10 rotate-180"
     />
-    <input
-      autocomplete="on"
-      type="text"
-      id="name-input"
-      name="name"
-      required
-      placeholder="Twoje imię / nazwa firmy"
-      class="opacity-90 backdrop-blur-xs"
-    />
-    <input
-      autocomplete="on"
-      type="email"
-      id="email-input"
-      name="email"
-      required
-      placeholder="Twój adres email"
-      class="opacity-90 backdrop-blur-xs"
-    />
-    <input
-      autocomplete="off"
-      type="text"
-      id="topic-input"
-      name="topic"
-      required
-      placeholder="Temat wiadomości"
-      class="md:col-span-2 opacity-90 backdrop-blur-xs"
-    />
-    <textarea
-      name="content"
-      required
-      id="content-input"
-      maxlength="1000"
-      minlength="1"
-      rows="6"
-      autocomplete="off"
-      placeholder="Treść"
-      class="md:col-span-2 opacity-90 backdrop-blur-xs"
-    ></textarea>
-    <Button class="justify-self-end md:col-span-2 cursor-pointer">Wyślij</Button>
-  </form>
-  <span>Copyright</span>
-  <Image
-    src={halftoneBg}
-    alt=""
-    class="absolute bottom-0 inset-x-0 opacity-10 rotate-180"
-  />
 </footer>
 
 <style>
-  input,
-  textarea {
-    background-color: var(--color-elevation);
-    border: none;
-    border-bottom: 1px solid oklch(100% 0 0 / 0.1);
-    color: var(--color-strong);
+    input,
+    textarea {
+        background-color: var(--color-elevation);
+        border: none;
+        border-bottom: 1px solid oklch(100% 0 0 / 0.1);
+        color: var(--color-strong);
 
-    &::placeholder {
-      color: var(--color-weak);
-    }
+        &::placeholder {
+            color: var(--color-weak);
+        }
 
-    &:focus {
-      --tw-ring-color: var(--color-accent);
-      border-bottom: none;
+        &:focus {
+            --tw-ring-color: var(--color-accent);
+            border-bottom: none;
+        }
     }
-  }
-  *:not(img) {
-    z-index: 2;
-  }
+    *:not(img) {
+        z-index: 2;
+    }
 </style>
