@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^7.1.0",
+    "@astrojs/vercel": "^11.0.16",
     "@iconify-json/griddy-icons": "^1.2.0",
     "@iconify-json/pixelarticons": "^1.2.9",
     "@sanity/astro": "^3.5.1",
