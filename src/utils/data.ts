@@ -7,13 +7,13 @@ export const contactData = [
       nip: { value: "NIP 6423252456", icon: "griddy-icons:location-pin" },
     },
   },
-  {
-    name: "Jakub Wróbel",
-    contacts: {
-      phone: { value: "+48 660 672 795", icon: "griddy-icons:phone" },
-      nip: { value: "NIP 6351740990", icon: "griddy-icons:location-pin" },
-    },
-  },
+  // {
+  //   name: "Jakub Wróbel",
+  //   contacts: {
+  //     phone: { value: "+48 660 672 795", icon: "griddy-icons:phone" },
+  //     nip: { value: "NIP 6351740990", icon: "griddy-icons:location-pin" },
+  //   },
+  // },
 ];
 
 export const services = [
