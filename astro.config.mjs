@@ -2,7 +2,6 @@
 import { defineConfig, fontProviders } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
-
 import icon from "astro-icon";
 import vercel from "@astrojs/vercel";
 import sanity from "@sanity/astro";
@@ -34,11 +33,6 @@ export default defineConfig({
     },
   ],
 
-  // server: {
-  //   host: true,
-  //   port: 4321,
-  // },
-
   integrations: [
     icon(),
     sanity({
@@ -47,7 +41,6 @@ export default defineConfig({
       apiVersion: "2026-03-01",
       useCdn: false,
     }),
-    ,
     react(),
   ],
 });

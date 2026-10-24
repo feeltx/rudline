@@ -1,0 +1,245 @@
+---
+import { isNew } from "@utils/index";
+import SanityImage from "./SanityImage.astro";
+
+const { projects } = Astro.props;
+---
+
+<section data-carousel aria-roledescription="carousel" aria-label="Realizacje">
+    <div
+        data-track
+        tabindex="0"
+        class="flex w-full snap-x snap-mandatory gap-3 overflow-x-auto scrollbar-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+    >
+        {projects.map((project: any, i: number) => (
+            <div
+                data-slide
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${i + 1} z ${projects.length}`}
+                class="group relative w-full shrink-0 snap-start lg:w-[calc((100%-0.75rem)/2)]"
+            >
+                <SanityImage node={project.image} />
+                {isNew(project.date) && (
+                    <span class="bg-accent text-surface absolute top-2 left-2 z-10 uppercase px-2.5 py-1 text-xs font-medium rounded-full select-none group-hover:opacity-0 group-hover:scale-95 transition-all origin-tc">
+                        nowość
+                    </span>
+                )}
+            </div>
+        ))}
+    </div>
+
+    <div data-controls hidden class="mt-4">
+        <div class="flex items-center justify-between gap-4">
+            <button
+                type="button"
+                data-prev
+                aria-label="Poprzednie zdjęcie"
+                class="grid size-11 shrink-0 place-items-center text-strong cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent -translate-x-3"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    class="size-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                >
+                    <path d="m15 18-6-6 6-6"></path>
+                </svg>
+            </button>
+
+            <div class="flex flex-wrap items-center justify-center">
+                {projects.map((_: any, i: number) => (
+                    <button
+                        type="button"
+                        data-dot
+                        aria-label={`Przejdź do zdjęcia ${i + 1}`}
+                        class="group/dot grid size-6 place-items-center focus-visible:outline-2 focus-visible:outline-accent"
+                    >
+                        <span class="h-1.5 w-1.5 bg-accent/30 transition-all group-data-active/dot:w-5 group-data-active/dot:bg-accent" />
+                    </button>
+                ))}
+            </div>
+
+            <button
+                type="button"
+                data-next
+                aria-label="Następne zdjęcie"
+                class="grid size-11 shrink-0 place-items-center text-strong cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent translate-x-3"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    class="size-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                >
+                    <path d="m9 18 6-6-6-6"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</section>
+
+<script>
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    document
+        .querySelectorAll<HTMLElement>("[data-carousel]")
+        .forEach((root) => {
+            const track = root.querySelector<HTMLElement>("[data-track]")!;
+            const controls =
+                root.querySelector<HTMLElement>("[data-controls]")!;
+            const prev = root.querySelector<HTMLButtonElement>("[data-prev]")!;
+            const next = root.querySelector<HTMLButtonElement>("[data-next]")!;
+            const slides = [
+                ...root.querySelectorAll<HTMLElement>("[data-slide]"),
+            ];
+            const dots = [...root.querySelectorAll<HTMLElement>("[data-dot]")];
+
+            // Distance between the left edges of two neighbouring slides (width + gap)
+            const step = () =>
+                slides.length > 1
+                    ? slides[1].offsetLeft - slides[0].offsetLeft
+                    : track.clientWidth;
+            const maxScroll = () => track.scrollWidth - track.clientWidth;
+            const current = () => Math.round(track.scrollLeft / step());
+            const goTo = (left: number) =>
+                track.scrollTo({
+                    left,
+                    behavior: reduceMotion.matches ? "auto" : "smooth",
+                });
+
+            const go = (dir: 1 | -1) => {
+                const max = maxScroll();
+                const left = track.scrollLeft;
+                if (dir === 1) {
+                    // At the end: wrap to the first slide
+                    goTo(
+                        left >= max - 2
+                            ? 0
+                            : Math.min(max, (current() + 1) * step()),
+                    );
+                } else {
+                    // At the start: wrap to the last slide
+                    goTo(
+                        left <= 2 ? max : Math.max(0, (current() - 1) * step()),
+                    );
+                }
+            };
+
+            next.addEventListener("click", () => go(1));
+            prev.addEventListener("click", () => go(-1));
+            dots.forEach((dot, i) =>
+                dot.addEventListener("click", () =>
+                    goTo(Math.min(i * step(), maxScroll())),
+                ),
+            );
+            track.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    go(1);
+                } else if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    go(-1);
+                }
+            });
+
+            // Drag to scroll (mouse only; touch and pen already scroll natively)
+            let startX = 0;
+            let startScroll = 0;
+            let startTime = 0;
+            let dragging = false;
+            let suppressClick = false;
+
+            const onMove = (e: PointerEvent) => {
+                const dx = e.clientX - startX;
+                if (!dragging) {
+                    if (Math.abs(dx) < 5) return; // below this it's still a click
+                    dragging = true;
+                    track.style.scrollSnapType = "none"; // snap would fight the drag
+                    track.style.cursor = "grabbing";
+                }
+                track.scrollLeft = startScroll - dx;
+            };
+
+            const onUp = (e: PointerEvent) => {
+                window.removeEventListener("pointermove", onMove);
+                window.removeEventListener("pointerup", onUp);
+                window.removeEventListener("pointercancel", onUp);
+                if (!dragging) return;
+                dragging = false;
+                suppressClick = true;
+
+                // Move one slide if dragged past 20% of a slide, or flicked quickly
+                const dx = e.clientX - startX;
+                const flick = Date.now() - startTime < 250 && Math.abs(dx) > 30;
+                const threshold = flick ? 0 : step() * 0.2;
+                let index = Math.round(startScroll / step());
+                if (dx < -threshold) index += 1;
+                else if (dx > threshold) index -= 1;
+
+                track.style.scrollSnapType = "";
+                track.style.cursor = "";
+                goTo(Math.max(0, Math.min(index * step(), maxScroll())));
+            };
+
+            track.addEventListener("pointerdown", (e) => {
+                if (e.pointerType !== "mouse" || e.button !== 0) return;
+                if (maxScroll() <= 2) return;
+                startX = e.clientX;
+                startScroll = track.scrollLeft;
+                startTime = Date.now();
+                suppressClick = false;
+                window.addEventListener("pointermove", onMove);
+                window.addEventListener("pointerup", onUp);
+                window.addEventListener("pointercancel", onUp);
+            });
+
+            // A drag shouldn't count as a click on whatever is under the cursor
+            track.addEventListener(
+                "click",
+                (e) => {
+                    if (suppressClick) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        suppressClick = false;
+                    }
+                },
+                true,
+            );
+            // Stop the browser's native image ghost-drag
+            track.addEventListener("dragstart", (e) => e.preventDefault());
+
+            // Indicators: every slide that is at least 60% visible counts as current
+            const visible = new Set<number>();
+            const io = new IntersectionObserver(
+                (entries) => {
+                    for (const entry of entries) {
+                        const i = slides.indexOf(entry.target as HTMLElement);
+                        if (entry.isIntersecting) visible.add(i);
+                        else visible.delete(i);
+                    }
+                    dots.forEach((dot, i) => {
+                        const on = visible.has(i);
+                        dot.toggleAttribute("data-active", on);
+                        if (on) dot.setAttribute("aria-current", "true");
+                        else dot.removeAttribute("aria-current");
+                    });
+                },
+                { root: track, threshold: 0.6 },
+            );
+            slides.forEach((slide) => io.observe(slide));
+
+            // Show controls only when there is something to scroll to
+            const sync = () => {
+                const scrollable = maxScroll() > 2;
+                controls.hidden = !scrollable;
+                track.toggleAttribute("data-scrollable", scrollable);
+            };
+            new ResizeObserver(sync).observe(track);
+            sync();
+        });
+</script>
